@@ -47,6 +47,16 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    # mailpitは、コンテナ内でメールのやり取りの確認ができる。
+    mailpit:
+        image: axllent/mailpit:v1.8
+        ports:
+            - 1025:1025
+            - 8025:8025
+        networks:
+            - sail
+        depends_on:
+            - laravel.test        
 networks:
     sail:
         driver: bridge
