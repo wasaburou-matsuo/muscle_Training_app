@@ -17,7 +17,7 @@ class TrainingEquipmentsTableSeeder extends Seeder
         //training_resultsテーブルからidだけ、配列として取得。外部キー制約があるため
         $training_results = DB::table('training_results')->pluck('id')->toArray();
         //器具の名前を配列として定義
-        $training_equipments_names = ['Bench Press Bench', 'Dumbbell', 'Pull-up Machine', 'Shoulder Press Machine', 'Ab Roller', 'Deadlift Bar'];
+        $training_equipments_names = ['Bench Press Bench', 'Dumbbell', 'Pull-up Machine', 'Shoulder Press Machine', 'Ab Roller', 'Deadlift Bar', 'Dumbbell', 'Pull-up Machine'];
 
 
         foreach ($training_equipments_names as $training_equipments_name) {
