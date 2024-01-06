@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-//UUIDに対応するため
+//このモデルは、UUIDを使用するという事を定義。
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
