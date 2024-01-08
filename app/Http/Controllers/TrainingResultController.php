@@ -37,6 +37,14 @@ class TrainingResultController extends Controller
      */
     public function index()
     {
+        //モデル（TrainingResult.php）からトレーニング実績の一覧を取得
+        $training_results = TrainingResult::select ('training_results.id', 'training_results.title', 'training_results.description' ,
+        'training_results.created_at' , 'training_results.image' ,'users.name')
+        ->join('users' ,'users.id' ,'=' ,'training_results.user_id')
+        ->orderby('created_at', 'desc')
+        ->get();
+
+        dd($training_results);
     }
 
     /**
