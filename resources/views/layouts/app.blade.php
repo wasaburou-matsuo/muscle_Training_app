@@ -34,7 +34,9 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            {{-- 余白を設定 --}}
+            <main class="container mx-auto py-8">
+                
                 {{ $slot }}
             </main>
         </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TrainingResultController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// ホーム画面のルートを再設定
+Route::get('/', [TrainingResultController::class,'home'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
