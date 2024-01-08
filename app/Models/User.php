@@ -43,6 +43,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        //idはuuidの為、文字列型にキャストしてあげなければuuidが使えず、ルーティングがうまく行かなくなってしまう。
         'id' => 'string'
     ];
 }
