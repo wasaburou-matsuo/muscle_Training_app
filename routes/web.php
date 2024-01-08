@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 // ホーム画面のルートを再設定
 Route::get('/', [TrainingResultController::class,'home'])->name('home');
 
+// 一覧画面のルートを設定
+Route::get('/training_result', [TrainingResultController::class,'index'])->name('training_result.index');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
