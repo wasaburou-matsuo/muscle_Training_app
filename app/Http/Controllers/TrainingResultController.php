@@ -44,7 +44,7 @@ class TrainingResultController extends Controller
         ->orderby('created_at', 'desc')
         ->get();
 
-        // dd($training_results);
+        return view('training_results.index', compact('$training_results'));
     }
 
     /**
