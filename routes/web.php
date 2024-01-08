@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // ホーム画面のルートを再設定
-Route::get('/', [TrainingResultController::class,index])->name('home')
+Route::get('/', [TrainingResultController::class,'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
