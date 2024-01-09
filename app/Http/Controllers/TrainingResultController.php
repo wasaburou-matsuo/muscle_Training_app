@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TrainingResult;
+use App\Models\TrainingArea;
 
 class TrainingResultController extends Controller
 {
@@ -44,7 +45,10 @@ class TrainingResultController extends Controller
         ->orderby('created_at', 'desc')
         ->get();
 
-        return view('training_results.index', compact('training_results'));
+        //検索用のすべてのカテゴリを取得
+        $categories = TrainingArea::all();
+
+        return view('training_results.index', compact('training_results','categories'));
     }
 
     /**
