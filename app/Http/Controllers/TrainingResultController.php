@@ -36,14 +36,45 @@ class TrainingResultController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //モデル（TrainingResult.php）からトレーニング実績の一覧を取得
-        $training_results = TrainingResult::select ('training_results.id', 'training_results.title', 'training_results.description' ,
+        //リクエストで送られてきたデータをすべて取得
+        $filters = $request->all();
+        // dd($filters);
+
+        // //モデル（TrainingResult.php）からトレーニング実績の一覧を取得
+        // $training_results = TrainingResult::select ('training_results.id', 'training_results.title', 'training_results.description' ,
+        // 'training_results.created_at' , 'training_results.image' ,'users.name')
+        // ->join('users' ,'users.id' ,'=' ,'training_results.user_id')
+        // ->orderby('created_at', 'desc')
+        // ->get();
+
+        //query()メソッドを使用して、上記クエリを分割する。
+        $query = TrainingResult::query()->select ('training_results.id', 'training_results.title', 'training_results.description' ,
         'training_results.created_at' , 'training_results.image' ,'users.name')
         ->join('users' ,'users.id' ,'=' ,'training_results.user_id')
-        ->orderby('created_at', 'desc')
-        ->get();
+        ->orderby('created_at', 'desc');
+
+        //リクエストで送られてきたデータが空(絞り込みが無い）の場合は、スルー
+        if(!empty($filters)){
+            if(!empty($filters['categories'])){
+                //カテゴリで絞り込みがあった場合は、クエリに追加することが可能。whereIn（含まれていたら）
+                //カテゴリIDが含まれているレシピを取得。
+                $query->whereIn('training_results.training_areas_id',$filters['categories']);
+            }
+            dd($query);
+
+            //キーワード検索（あいまい検索）
+            if(!empty($filters['title'])){
+                //キーワードで絞り込みがあった場合は、クエリに追加することが可能。whereIn（含まれていたら）
+                //トレーニング実績テーブルのtitelカラムにキーワードが含まれるデータ（トレーニング実績）を取得。
+                $query->where('training_results.title','like', '%'.$filters['title'].'%');
+            }
+            // dd($query);
+        }
+
+        $training_results= $query->get();
+        dd($training_results);
 
         //検索用のすべてのカテゴリを取得
         $categories = TrainingArea::all();

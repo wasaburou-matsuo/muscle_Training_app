@@ -18,6 +18,7 @@
       </div>
 
       <div class="col-span-1 bg-white p-4 h-max sticky top-4">
+        {{-- web.phpの/training_resultルートをみにいく。ルート名がtraining_result.indexである。 --}}
         <form action="{{route('training_result.index')}}" method="GET">
         <div class="flex">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-gray-700 mr-2">
