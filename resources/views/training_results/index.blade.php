@@ -45,6 +45,7 @@
           <label class="text-lg text-gray-800">カテゴリー</label>
           @foreach($categories as $category)
           <div class="ml-4 mb-2">
+            {{-- カテゴリは配列categories[]にして渡すことがポイント --}}
             <input type="checkbox" name="categories[]" value="{{$category['id']}}" id="category{{$category['id']}}"/>
             <label for="category{{$category['id']}}">{{$category['name']}}</label>
           </div>

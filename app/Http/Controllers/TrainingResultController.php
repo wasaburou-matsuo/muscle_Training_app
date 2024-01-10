@@ -51,30 +51,44 @@ class TrainingResultController extends Controller
 
         //query()メソッドを使用して、上記クエリを分割する。
         $query = TrainingResult::query()->select ('training_results.id', 'training_results.title', 'training_results.description' ,
-        'training_results.created_at' , 'training_results.image' ,'users.name')
+        'training_results.created_at' , 'training_results.image' ,'users.name'
+        ,\DB::raw('AVG(training_reviews.rating) as rating'))
         ->join('users' ,'users.id' ,'=' ,'training_results.user_id')
+        ->leftJoin('training_reviews','training_results.id' , '=' , 'training_results.id')
+        ->groupBy('training_results.id')
         ->orderby('created_at', 'desc');
 
         //リクエストで送られてきたデータが空(絞り込みが無い）の場合は、スルー
         if(!empty($filters)){
+            //カテゴリで絞り込み
             if(!empty($filters['categories'])){
                 //カテゴリで絞り込みがあった場合は、クエリに追加することが可能。whereIn（含まれていたら）
                 //カテゴリIDが含まれているレシピを取得。
                 $query->whereIn('training_results.training_areas_id',$filters['categories']);
             }
-            dd($query);
+            // dd($query);
 
-            //キーワード検索（あいまい検索）
+            //評価で絞り込み
+            if(!empty($filters['rating'])){
+                //havingRowで、生のSQLをしてすることが出来る（havingとは異なる）
+                //テーブル結合し、グループ化した後、評価の平均値を出力する。
+                $query->havingRaw('AVG(training_reviews.rating) >= ?',[$filters['rating']])
+                ->orderBy('rating', 'desc');
+            }
+            // dd($query);
+            
+            //キーワード検索（あいまい検索）で絞り込み
             if(!empty($filters['title'])){
                 //キーワードで絞り込みがあった場合は、クエリに追加することが可能。whereIn（含まれていたら）
                 //トレーニング実績テーブルのtitelカラムにキーワードが含まれるデータ（トレーニング実績）を取得。
                 $query->where('training_results.title','like', '%'.$filters['title'].'%');
             }
             // dd($query);
+
         }
 
         $training_results= $query->get();
-        dd($training_results);
+        // dd($training_results);
 
         //検索用のすべてのカテゴリを取得
         $categories = TrainingArea::all();
