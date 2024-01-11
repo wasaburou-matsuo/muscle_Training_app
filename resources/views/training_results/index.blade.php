@@ -17,6 +17,7 @@
                 </div>
             </a>
         @endforeach
+        {{ $training_results->links() }}
       </div>
 
       <div class="col-span-1 bg-white p-4 h-max sticky top-4">

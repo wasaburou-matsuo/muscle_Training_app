@@ -87,7 +87,10 @@ class TrainingResultController extends Controller
 
         }
 
-        $training_results= $query->get();
+        // $training_results= $query->get();
+        //ページネーション対応
+        // $training_results= $query->pagenate(5);
+        $training_results = $query->paginate(5);
         // dd($training_results);
 
         //検索用のすべてのカテゴリを取得
