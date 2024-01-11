@@ -93,7 +93,7 @@ class TrainingResultController extends Controller
         //検索用のすべてのカテゴリを取得
         $categories = TrainingArea::all();
 
-        return view('training_results.index', compact('training_results','categories'));
+        return view('training_results.index', compact('training_results','categories','filters'));
     }
 
     /**
