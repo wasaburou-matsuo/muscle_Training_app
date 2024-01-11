@@ -25,7 +25,7 @@ class TrainingEquipmentsTableSeeder extends Seeder
                 DB::table('training_equipments')->insert([
                     'training_results_id' => $training_results,
                     //array_
-                    rand関数で、指定した配列のキーを取得
+                    //rand関数で、指定した配列のキーを取得
                     // 'name' => $training_equipments_names[array_rand($training_equipments_names)],
                     // 'name' => $training_equipments_names[1],
                     'name' => $training_equipments_names[array_rand($training_equipments_names)],

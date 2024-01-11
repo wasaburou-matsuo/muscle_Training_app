@@ -4,7 +4,8 @@
         {{ Breadcrumbs::render('index') }}
         <div class = "mb-4"></div>
         @foreach($training_results as $training_result)
-            <a href="" class="flex flex-col items-center bg-white mb-6 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
+          {{-- routeメソッドの第２引数に配列を設定してあげることで、URLに引数を設定し、遷移画面を分岐させることが出来る。 --}}
+            <a href="{{route('training_result.show',['id' => $training_result['id']])}}" class="flex flex-col items-center bg-white mb-6 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
                 <img class="object-cover rounded-t-lg h-40 w-40 mrounded-none rounded-l-lg" src="{{$training_result->image}}" alt="{{$training_result->title}}">
                 <div class="flex flex-col justify-between p-4 leading-normal">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-800">{{$training_result->title}}</h5>

@@ -120,7 +120,22 @@ class TrainingResultController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // dd($id);
+
+        //findメソッドで、idに一致するデータを１つだけ取得
+        $training_results = TrainingResult::find($id);
+        //ページ閲覧数を＋１する
+        $training_results->increment('views');
+
+        //リレーションで器具と説明を取得予定
+
+
+        // dd($training_results);
+
+        //トレーニング用の閲覧ページを作成。
+        return view('training_results.show',compact('training_results'));
+        
+        
     }
 
     /**
