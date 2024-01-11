@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="grid grid-cols-3 gap-4">
       <div class="col-span-2 bg-white rounded p-4">
+        {{ Breadcrumbs::render('index') }}
+        <div class = "mb-4"></div>
         @foreach($training_results as $training_result)
             <a href="" class="flex flex-col items-center bg-white mb-6 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
                 <img class="object-cover rounded-t-lg h-40 w-40 mrounded-none rounded-l-lg" src="{{$training_result->image}}" alt="{{$training_result->title}}">
