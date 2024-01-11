@@ -48,7 +48,7 @@ class User extends Authenticatable
     ];
 
     public function result(){
-        //器具は、１つのトレーニング実績を持っている。
+        //１人のユーザーが、多数のトレーニング実績を持っている。
         return $this->hasMany(TrainingResult::class);
     }
 
