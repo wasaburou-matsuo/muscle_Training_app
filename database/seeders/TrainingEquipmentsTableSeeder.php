@@ -23,7 +23,7 @@ class TrainingEquipmentsTableSeeder extends Seeder
         foreach ($training_equipments_names as $training_equipments_name) {
             for ($i = 0; $i < rand(2, 5); $i++) { // Each recipe will have 2 to 5 ingredients
                 DB::table('training_equipments')->insert([
-                    'training_results_id' => $training_results,
+                    'training_results_id' => $training_results[array_rand($training_results)],
                     //array_
                     //rand関数で、指定した配列のキーを取得
                     // 'name' => $training_equipments_names[array_rand($training_equipments_names)],

@@ -52,4 +52,8 @@ class User extends Authenticatable
         return $this->hasMany(TrainingResult::class);
     }
 
+    public function reviews(){
+        //１人のユーザーが、多数のレビューを持っている。
+        return $this->hasMany(TrainingReview::class);
+    }
 }

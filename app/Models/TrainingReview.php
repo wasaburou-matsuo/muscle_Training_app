@@ -18,4 +18,10 @@ class TrainingReview extends Model
         //器具は、１つのトレーニング実績を持っている。
         return $this->belongsTo(TrainingResult::class);
     }
+
+    public function user()
+    {
+        // １つのレビューは、１つのユーザーが書いている。
+        return $this->belongsTo(User::class);
+    }
 }

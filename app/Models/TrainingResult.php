@@ -31,21 +31,23 @@ class TrainingResult extends Model
     //器具
     public function equipments(){
         //トレーニング実績は、複数の器具を持っている。
-        return $this->hasmany(TrainingEquipment::class);
+        return $this->hasmany(TrainingEquipment::class,'training_results_id','id');
+        // 第２引数を省略した場合は、第２引数の外部キーは、モデル名_id(TrainingResult_id)となる
+        // return $this->hasmany(TrainingEquipment::class);
     }
     public function events(){
         //トレーニング実績は、複数の種目を持っている。
-        return $this->hasmany(TrainingEvent::class);
+        return $this->hasmany(TrainingEvent::class,'training_results_id');
     }
 
     //評価
-    public fucntion reviews(){
+    public function reviews(){
         //トレーニング実績は、複数のレビューを持っている。
-        return $this->hasmany(TrainingReview::class);
+        return $this->hasmany(TrainingReview::class,'training_results_id');
     }
 
     //ユーザー
     public function user(){
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
