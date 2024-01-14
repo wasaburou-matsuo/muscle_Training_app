@@ -18,3 +18,10 @@ Breadcrumbs::for('index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('トレーニング一覧', route('training_result.index'));
 });
+
+// トレーニング一覧 > トレーニング詳細
+Breadcrumbs::for('show', function (BreadcrumbTrail $trail,$training_results) {
+    $trail->parent('index');
+    $trail->push($training_results['title'], route('training_result.show',$training_results['id']));
+});
+

@@ -14,4 +14,14 @@ class TrainingReview extends Model
     //論理削除モデルに自動的になってくれる。（nullの行だけ取得）
     use SoftDeletes;
 
+    public function result(){
+        //器具は、１つのトレーニング実績を持っている。
+        return $this->belongsTo(TrainingResult::class);
+    }
+
+    public function user()
+    {
+        // １つのレビューは、１つのユーザーが書いている。
+        return $this->belongsTo(User::class);
+    }
 }
