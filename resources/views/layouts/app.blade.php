@@ -14,8 +14,8 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        {{-- 自作のcssを読み込み --}}
-        <link rel="stylesheet" href="css/color.css">
+        {{-- 自作のcssを読み込み hrefは必ず「/」スラッシュから始める。 --}}
+        <link rel="stylesheet" href="/css/color.css">
     </head>
     <body class="font-sans antialiased background-color">
         <div class="min-h-screen ">

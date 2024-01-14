@@ -46,4 +46,14 @@ class User extends Authenticatable
         //idはuuidの為、文字列型にキャストしてあげなければuuidが使えず、ルーティングがうまく行かなくなってしまう。
         'id' => 'string'
     ];
+
+    public function result(){
+        //１人のユーザーが、多数のトレーニング実績を持っている。
+        return $this->hasMany(TrainingResult::class);
+    }
+
+    public function reviews(){
+        //１人のユーザーが、多数のレビューを持っている。
+        return $this->hasMany(TrainingReview::class);
+    }
 }

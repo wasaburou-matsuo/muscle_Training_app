@@ -25,6 +25,10 @@ Route::get('/', [TrainingResultController::class,'home'])->name('home');
 // 一覧画面のルートを設定
 Route::get('/training_result', [TrainingResultController::class,'index'])->name('training_result.index');
 
+// 詳細画面用のルートを設定
+// URLに引数（id）を設定することにより、idをコントローラーで取得し、使用する。
+Route::get('/training_result/{id}', [TrainingResultController::class,'show'])->name('training_result.show');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

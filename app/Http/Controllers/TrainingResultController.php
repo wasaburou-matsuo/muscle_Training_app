@@ -50,7 +50,8 @@ class TrainingResultController extends Controller
         // ->get();
 
         //query()メソッドを使用して、上記クエリを分割する。
-        $query = TrainingResult::query()->select ('training_results.id', 'training_results.title', 'training_results.description' ,
+        // クエリビルダを使用して取得
+        $query = TrainingResult::query()->selecto ('training_results.id', 'training_results.title', 'training_results.description' ,
         'training_results.created_at' , 'training_results.image' ,'users.name'
         ,\DB::raw('AVG(training_reviews.rating) as rating'))
         ->join('users' ,'users.id' ,'=' ,'training_results.user_id')
@@ -120,7 +121,43 @@ class TrainingResultController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // dd($id);
+
+        //findメソッドで、idに一致するデータを１つだけ取得
+        // $training_results = TrainingResult::find($id);
+        // $training_equipments = TrainingEquipment::where('training_results_id',$training_results['id'])->get();
+        // $training_Events = TrainingEvent::where('training_results_id',$training_results['id'])->get();
+        // $training_Reviews = TrainingReview::where('training_results_id',$training_results['id'])->get();
+
+        //以上のソースコードをwithメソッドで、トレーニング実績のidに一致する関連データを複数のテーブルから一気に取得出来る。
+        //withメソッドの引数は、モデルに記述した関数名を使用する。
+        // $training_results = TrainingResult::with('equipments','events','reviews','user')
+
+        // レビュー情報からユーザーデータを取得するため、reviews.userとする。
+        //流れ（実績モデルからレビューモデルを呼び、レビューモデルからユーザーを取得）
+        //ORMで記述
+        $training_results = TrainingResult::with(['equipments','events','reviews.user','user'])
+        ->where('training_results.id',$id)
+        // ->get();
+        // $training_results = $training_results[0];
+        // 取得した配列の最初の要素だけ取得
+        ->first();
+
+        // dd($training_results);
+
+        //ページ閲覧数を＋１する
+        $training_results_recode = TrainingResult::find($id);
+        $training_results_recode->increment('views');
+
+        //リレーションで器具と説明を取得予定
+
+
+        // dd($training_results);
+
+        //トレーニング用の閲覧ページを作成。
+        return view('training_results.show',compact('training_results'));
+        
+        
     }
 
     /**

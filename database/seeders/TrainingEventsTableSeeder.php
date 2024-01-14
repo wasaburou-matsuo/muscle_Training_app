@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-//DBファザードの使用を定義
+//ファザードのDBクラスをインポート
 use Illuminate\Support\Facades\DB;
 
 
