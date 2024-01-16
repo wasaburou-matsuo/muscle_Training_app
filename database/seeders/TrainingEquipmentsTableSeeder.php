@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-//DBファザードの使用を定義
+//ファザードのDBクラスをインポート
 use Illuminate\Support\Facades\DB;
 
 class TrainingEquipmentsTableSeeder extends Seeder
@@ -20,10 +20,12 @@ class TrainingEquipmentsTableSeeder extends Seeder
         $training_equipments_names = ['Bench Press Bench', 'Dumbbell', 'Pull-up Machine', 'Shoulder Press Machine', 'Ab Roller', 'Deadlift Bar', 'Dumbbell', 'Pull-up Machine'];
 
 
-        foreach ($training_equipments_names as $training_equipments_name) {
-            for ($i = 0; $i < rand(2, 5); $i++) { // Each recipe will have 2 to 5 ingredients
+        // foreach ($training_equipments_names as $training_equipments_name) {
+            foreach ($training_results as $training_result) {
+                for ($i = 0; $i < rand(2, 5); $i++) { // Each recipe will have 2 to 5 ingredients
                 DB::table('training_equipments')->insert([
-                    'training_results_id' => $training_results[array_rand($training_results)],
+                    // 'training_results_id' => $training_results[array_rand($training_results)],
+                    'training_results_id' => $training_results,
                     //array_
                     //rand関数で、指定した配列のキーを取得
                     // 'name' => $training_equipments_names[array_rand($training_equipments_names)],
