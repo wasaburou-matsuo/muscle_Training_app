@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TrainingResult;
 use App\Models\TrainingArea;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+// use App\Http\Controllers\TrainingResultsController;
 
 class TrainingResultController extends Controller
 {
@@ -108,7 +111,10 @@ class TrainingResultController extends Controller
      */
     public function create()
     {
-        return view('training_results.create');
+        $areas = TrainingArea::all();
+        // dd($areas);
+
+        return view('training_results.create',compact('areas'));
 
     }
 
@@ -118,7 +124,19 @@ class TrainingResultController extends Controller
     public function store(Request $request)
     {
         //
-        dd($request);
+        $post = $request->all();
+        // dd($posts);
+        // training_results::create([
+            //createだと自動採番してしまうので、uuidを設定する場合はinsertで行う。
+            TrainingResult::insert([
+            'id' => Str::uuid(),
+            'title' => $post['title'],
+            'description' => $post['description'],
+            'training_areas_id' => $post['category'],
+            'user_id' => Auth::id()                   //ログインユーザーのid
+        ]);
+
+
 
     }
 
@@ -149,7 +167,7 @@ class TrainingResultController extends Controller
         // 取得した配列の最初の要素だけ取得
         ->first();
 
-        dd($training_results);
+        // dd($training_results);
         
         //ページ閲覧数を＋１する
         $training_results_recode = TrainingResult::find($id);
