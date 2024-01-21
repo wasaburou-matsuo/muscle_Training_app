@@ -28,16 +28,16 @@ Route::get('/training_result', [TrainingResultController::class,'index'])->name(
 
 // // 詳細画面用のルートを設定
 // // URLに引数（id）を設定することにより、idをコントローラーで取得し、使用する。
-Route::get('/training_result/{id}', [TrainingResultController::class,'show'])->name('training_result.show');
+// Route::get('/training_result/{id}', [TrainingResultController::class,'show'])->name('training_result.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+//loginしたユーザーのみ、それ以外はログイン画面に戻される。
 Route::middleware('auth')->group(function () {
     Route::get('/training_result/create',[TrainingResultController::class, 'create'])->name('training_result.create');
-
+    Route::post('/trainig_result', [TrainingResultController::class,'store'])->name('training_result.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 
 // 詳細画面用のルートを設定
 // // URLに引数（id）を設定することにより、idをコントローラーで取得し、使用する。
-// Route::get('/training_result/{id}', [TrainingResultController::class,'show'])->name('training_result.show');
+Route::get('/training_result/{id}', [TrainingResultController::class,'show'])->name('training_result.show');
 
 
 require __DIR__.'/auth.php';

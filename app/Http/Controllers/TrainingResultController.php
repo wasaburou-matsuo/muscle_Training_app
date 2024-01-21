@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TrainingResult;
 use App\Models\TrainingArea;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+// use App\Http\Controllers\TrainingResultsController;
 
 class TrainingResultController extends Controller
 {
@@ -18,6 +21,9 @@ class TrainingResultController extends Controller
         ->limit(3)
         ->get();
 
+
+        
+
         //モデル（TrainingResult.php）から人気(閲覧数の多い）のトレーニング実績を新着順に３つ取得
         $popular = TrainingResult::select ('training_results.id', 'title', 'training_results.description' ,
         'training_results.created_at' , 'training_results.image' ,'training_results.views','users.name')
@@ -27,7 +33,7 @@ class TrainingResultController extends Controller
         ->get();
         
         //dump die
-        // dd($popular);
+        //  dd($popular);
 
         // Modelから取得してきたデータ(変数)をビューへ渡す。
         return view('home', compact('training_results','popular'));
@@ -51,7 +57,7 @@ class TrainingResultController extends Controller
 
         //query()メソッドを使用して、上記クエリを分割する。
         // クエリビルダを使用して取得
-        $query = TrainingResult::query()->selecto ('training_results.id', 'training_results.title', 'training_results.description' ,
+        $query = TrainingResult::query()->select ('training_results.id', 'training_results.title', 'training_results.description' ,
         'training_results.created_at' , 'training_results.image' ,'users.name'
         ,\DB::raw('AVG(training_reviews.rating) as rating'))
         ->join('users' ,'users.id' ,'=' ,'training_results.user_id')
@@ -105,7 +111,11 @@ class TrainingResultController extends Controller
      */
     public function create()
     {
-        //
+        $areas = TrainingArea::all();
+        // dd($areas);
+
+        return view('training_results.create',compact('areas'));
+
     }
 
     /**
@@ -114,6 +124,20 @@ class TrainingResultController extends Controller
     public function store(Request $request)
     {
         //
+        $post = $request->all();
+        // dd($posts);
+        // training_results::create([
+            //createだと自動採番してしまうので、uuidを設定する場合はinsertで行う。
+            TrainingResult::insert([
+            'id' => Str::uuid(),
+            'title' => $post['title'],
+            'description' => $post['description'],
+            'training_areas_id' => $post['category'],
+            'user_id' => Auth::id()                   //ログインユーザーのid
+        ]);
+
+
+
     }
 
     /**
@@ -144,10 +168,13 @@ class TrainingResultController extends Controller
         ->first();
 
         // dd($training_results);
-
+        
         //ページ閲覧数を＋１する
         $training_results_recode = TrainingResult::find($id);
+        // dd($training_results_recode);
         $training_results_recode->increment('views');
+        // $training_results_recode = TrainingResult::find($id);
+        // $training_results_recode->increment('views');
 
         //リレーションで器具と説明を取得予定
 

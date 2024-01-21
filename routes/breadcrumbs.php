@@ -25,3 +25,9 @@ Breadcrumbs::for('show', function (BreadcrumbTrail $trail,$training_results) {
     $trail->push($training_results['title'], route('training_result.show',$training_results['id']));
 });
 
+// トレーニング一覧 > レシピ投稿
+Breadcrumbs::for('create', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('トレーニング投稿', route('training_result.create'));
+});
+
