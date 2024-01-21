@@ -1,5 +1,6 @@
     <x-app-layout>
         <form action="{{route('training_results.store')}}" method="POST" class="w-10/12 p-4 mx-auto bg-white rounded">
+          @csrf
             {{ Breadcrumbs::render('create') }}
             <div class="grid grid-cols-2 rounded border border-gray-500 mt-4">
               <div class="col-span-1">
