@@ -19,7 +19,7 @@ class TrainingResultController extends Controller
         ->get();
 
 
-        phpinfo();
+        
 
         //モデル（TrainingResult.php）から人気(閲覧数の多い）のトレーニング実績を新着順に３つ取得
         $popular = TrainingResult::select ('training_results.id', 'title', 'training_results.description' ,
@@ -30,7 +30,7 @@ class TrainingResultController extends Controller
         ->get();
         
         //dump die
-         dd($popular);
+        //  dd($popular);
 
         // Modelから取得してきたデータ(変数)をビューへ渡す。
         return view('home', compact('training_results','popular'));
@@ -147,7 +147,7 @@ class TrainingResultController extends Controller
         // 取得した配列の最初の要素だけ取得
         ->first();
 
-        // dd($training_results);
+        dd($training_results);
         
         //ページ閲覧数を＋１する
         $training_results_recode = TrainingResult::find($id);
