@@ -9,6 +9,8 @@
               <div class="col-span-1 p-4">
                 <input type="text" name="title" placeholder="トレーニング名" class="border border-gray-300 p-2 mb-4 w-full rounded">
                 <textarea name="description" placeholder="トレーニングの説明" class="border border-gray-300 p-2 mb-4 w-full roundedl"></textarea>
-              </div>
+                <div class="flex justify-end">
+                  <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">レシピを投稿する</button>              </div>
+                </div>  
         </form>
     </x-app-layout> 
