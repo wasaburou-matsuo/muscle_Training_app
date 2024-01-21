@@ -9,5 +9,5 @@
                 <input type="text" name="title" placeholder="トレーニング名" class="border border-gray-300 p-2 mb-4 w-full rounded">
                 <textarea name="description" placeholder="トレーニングの説明" class="border border-gray-300 p-2 mb-4 w-full roundedl"></textarea>
               </div>
-          </form>
+        </form>
     </x-app-layout> 
