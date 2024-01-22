@@ -1,5 +1,8 @@
 <x-app-layout>
-
+  <x-slot name="script">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
+    <script src="/js/training_results/create.js"></script>
+  </x-slot>
   <form action="{{route('training_result.store')}}" method="POST" class="w-10/12 p-4 mx-auto bg-white rounded" enctype="multipart/form-data">
     @csrf
       {{ Breadcrumbs::render('create') }}
