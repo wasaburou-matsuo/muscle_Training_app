@@ -129,11 +129,13 @@ class TrainingResultController extends Controller
         // dd($posts);
         //S3に画像アップロード
         $image = $request->file('image');
-        //putfile 引数（指定したS3バケットのどのフォルダ,オブジェクト,公開可能なURL）
+        //putfile 引数（指定したS3バケットのどのフォルダ,オブジェクト,公開可能なパスを取得）
         $path = Storage::disk('s3')->putFile('training-result', $image, 'public');
-        dd($path);
+        // dd($path);
 
-        //S3のURLをアップロード
+        //S3のURLを取得
+        $url = Storage::disk('s3')->url($path);
+        // dd($url);
 
         //DBにはURLを保存
 
@@ -145,6 +147,7 @@ class TrainingResultController extends Controller
             'title' => $post['title'],
             'description' => $post['description'],
             'training_areas_id' => $post['category'],
+            'image' => $url,
             'user_id' => Auth::id()                   //ログインユーザーのid
         ]);
 
