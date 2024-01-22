@@ -126,7 +126,15 @@ class TrainingResultController extends Controller
         //
         $post = $request->all();
         // dd($posts);
-        // training_results::create([
+        //S3に画像アップロード
+
+
+        //S3のURLをアップロード
+
+        //DBにはURLを保存
+        
+
+        // TrainingResult::create([
             //createだと自動採番してしまうので、uuidを設定する場合はinsertで行う。
             TrainingResult::insert([
             'id' => Str::uuid(),

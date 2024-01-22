@@ -21,7 +21,7 @@ class TrainingResult extends Model
     //リレーションを設定する
     //部位
     public function area(){
-        //今回は１つのトレーニング実績は、１つの部員を持っている。
+        //今回は１つのトレーニング実績は、１つの部位を持っている。
         //１対１のリレーションのときは、hasOneを使う。
         // return $this->hasOne(TrainingArea::class);
         //belongsToでも可能。
