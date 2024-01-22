@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TrainingResult;
 use App\Models\TrainingArea;
+use App\Models\TrainingEvent;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\TrainingResultsController;
@@ -126,7 +127,9 @@ class TrainingResultController extends Controller
     {
         //
         $post = $request->all();
-        // dd($posts);
+        $uuid = Str::uuid()->toString();
+        // dd($post);
+        
         //S3に画像アップロード
         $image = $request->file('image');
         //putfile 引数（指定したS3バケットのどのフォルダ,オブジェクト,公開可能なパスを取得）
@@ -143,13 +146,27 @@ class TrainingResultController extends Controller
         // TrainingResult::create([
             //createだと自動採番してしまうので、uuidを設定する場合はinsertで行う。
             TrainingResult::insert([
-            'id' => Str::uuid(),
+            'id' => $uuid,
             'title' => $post['title'],
             'description' => $post['description'],
             'training_areas_id' => $post['category'],
             'image' => $url,
             'user_id' => Auth::id()                   //ログインユーザーのid
         ]);
+
+        $steps = [];
+        foreach($post['steps'] as $key => $step){
+        $steps[$key] = [
+            'training_results_id' => $uuid,
+            'step_number' => $key + 1,
+            'description' => $step
+        ];
+        }
+
+        // dd($steps);
+        
+        TrainingEvent::insert($steps);
+
     }
 
     /**
