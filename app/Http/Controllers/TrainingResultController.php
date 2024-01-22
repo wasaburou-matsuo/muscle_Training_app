@@ -8,6 +8,7 @@ use App\Models\TrainingArea;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\TrainingResultsController;
+use Illuminate\Support\Facades\Storage;
 
 class TrainingResultController extends Controller
 {
@@ -127,12 +128,15 @@ class TrainingResultController extends Controller
         $post = $request->all();
         // dd($posts);
         //S3に画像アップロード
-
+        $image = $request->file('image');
+        //putfile 引数（指定したS3バケットのどのフォルダ,オブジェクト,公開可能なURL）
+        $path = Storage::disk('s3')->putFile('training-result', $image, 'public');
+        dd($path);
 
         //S3のURLをアップロード
 
         //DBにはURLを保存
-        
+
 
         // TrainingResult::create([
             //createだと自動採番してしまうので、uuidを設定する場合はinsertで行う。
