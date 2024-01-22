@@ -154,6 +154,23 @@ class TrainingResultController extends Controller
             'user_id' => Auth::id()                   //ログインユーザーのid
         ]);
 
+        // 以下２行のようなデータで、データがフォームから飛んできてほしい。
+        // $posts['equipments'] =$posts['equipments'][0]['name']
+        // $posts['equipments'] =$posts['equipments'][0]['wheight']
+
+        $equipments = [];
+        foreach($post['equipments'] as $key => $equipment){
+        $equipments[$key] = [
+            'training_results_id' => $uuid,
+            'name' => $equipments['name'],
+            'wheight' => $equipments['wheight']
+        ];
+        }
+
+        // dd($steps);
+        
+        TrainingEquipment::insert($equipments);
+
         $steps = [];
         foreach($post['steps'] as $key => $step){
         $steps[$key] = [

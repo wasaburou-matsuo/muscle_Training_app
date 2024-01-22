@@ -46,5 +46,28 @@ window.onload = function() {
       steps.appendChild(step);
     });
 
-
-  };
+      //材料の追加
+      var equipments = document.getElementById('equipments');
+      Sortable.create(equipments, {
+        animation: 150,
+        handle: '.handle',
+        onEnd: function(evt) {
+          var items = equipments.querySelectorAll('.equipment');
+          items.forEach(function(item, index) {
+            item.querySelector('.equipment-name').name = `equipment[${index}][name]`;
+            item.querySelector('.equipment-wheight').name = `equipment[${index}][wheight]`;
+          });
+        }
+    });
+            //器具を削除する
+            equipments.addEventListener('click', function(evt) {
+                if (evt.target.classList.contains('equipments-delete') || evt.target.closest('.equipments-delete') ) {
+                  evt.target.closest('.equipments').remove();
+                  var items = equipments.querySelectorAll('.equipments');
+                  items.forEach(function(item, index) {
+                      item.querySelector('.equipments-name').name = `equipments[${index}][name]`;
+                      item.querySelector('.equipments-quantity').name = `equipments[${index}][quantity]`;
+                  });        
+                }
+        })
+  };//window.onload = function
