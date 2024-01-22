@@ -150,9 +150,6 @@ class TrainingResultController extends Controller
             'image' => $url,
             'user_id' => Auth::id()                   //ログインユーザーのid
         ]);
-
-
-
     }
 
     /**
