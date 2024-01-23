@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TrainingResult;
 use App\Models\TrainingArea;
+use App\Models\TrainingEquipment;
 use App\Models\TrainingEvent;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -162,12 +163,12 @@ class TrainingResultController extends Controller
         foreach($post['equipments'] as $key => $equipment){
         $equipments[$key] = [
             'training_results_id' => $uuid,
-            'name' => $equipments['name'],
-            'wheight' => $equipments['wheight']
+            'name' => $equipment['name'],
+            'weight' => $equipment['weight']
         ];
         }
 
-        // dd($steps);
+        // dd($equipments);
         
         TrainingEquipment::insert($equipments);
 
