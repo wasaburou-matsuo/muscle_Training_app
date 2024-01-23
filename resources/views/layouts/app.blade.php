@@ -12,10 +12,18 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <script src="https://cdn.tailwindcss.com"></script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         {{-- 自作のcssを読み込み hrefは必ず「/」スラッシュから始める。 --}}
         <link rel="stylesheet" href="/css/color.css">
+
+        {{-- javascriptsを読み込むためのスクリプト --}}
+        @if(isset($script))
+            {{ $script }}
+        @endif
+
     </head>
     <body class="font-sans antialiased background-color">
         <div class="min-h-screen ">

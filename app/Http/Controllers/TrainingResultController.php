@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TrainingResult;
 use App\Models\TrainingArea;
+use App\Models\TrainingEquipment;
+use App\Models\TrainingEvent;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\TrainingResultsController;
+use Illuminate\Support\Facades\Storage;
 
 class TrainingResultController extends Controller
 {
@@ -125,18 +128,62 @@ class TrainingResultController extends Controller
     {
         //
         $post = $request->all();
-        // dd($posts);
-        // training_results::create([
+        $uuid = Str::uuid()->toString();
+        // dd($post);
+        
+        //S3に画像アップロード
+        $image = $request->file('image');
+        //putfile 引数（指定したS3バケットのどのフォルダ,オブジェクト,公開可能なパスを取得）
+        $path = Storage::disk('s3')->putFile('training-result', $image, 'public');
+        // dd($path);
+
+        //S3のURLを取得
+        $url = Storage::disk('s3')->url($path);
+        // dd($url);
+
+        //DBにはURLを保存
+
+
+        // TrainingResult::create([
             //createだと自動採番してしまうので、uuidを設定する場合はinsertで行う。
             TrainingResult::insert([
-            'id' => Str::uuid(),
+            'id' => $uuid,
             'title' => $post['title'],
             'description' => $post['description'],
             'training_areas_id' => $post['category'],
+            'image' => $url,
             'user_id' => Auth::id()                   //ログインユーザーのid
         ]);
 
+        // 以下２行のようなデータで、データがフォームから飛んできてほしい。
+        // $posts['equipments'] =$posts['equipments'][0]['name']
+        // $posts['equipments'] =$posts['equipments'][0]['wheight']
 
+        $equipments = [];
+        foreach($post['equipments'] as $key => $equipment){
+        $equipments[$key] = [
+            'training_results_id' => $uuid,
+            'name' => $equipment['name'],
+            'weight' => $equipment['weight']
+        ];
+        }
+
+        // dd($equipments);
+        
+        TrainingEquipment::insert($equipments);
+
+        $steps = [];
+        foreach($post['steps'] as $key => $step){
+        $steps[$key] = [
+            'training_results_id' => $uuid,
+            'step_number' => $key + 1,
+            'description' => $step
+        ];
+        }
+
+        // dd($steps);
+        
+        TrainingEvent::insert($steps);
 
     }
 
