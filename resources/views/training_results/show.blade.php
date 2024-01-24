@@ -24,7 +24,7 @@
       <br>
     <!-- steps -->
     <div class="">
-        <h4 class="text-2xl font-bold mb-6">種目</h4>
+        <h4 class="text-2xl font-bold mb-6">トレーニングステップ</h4>
         <div class="grid grid-cols-4 gap-4">
       @foreach($training_results['events'] as $s)
           <div class="mb-2 background-color p-2">
