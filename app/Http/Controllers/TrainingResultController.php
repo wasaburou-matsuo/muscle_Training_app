@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\TrainingResultsController;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class TrainingResultController extends Controller
 {
@@ -143,7 +144,9 @@ class TrainingResultController extends Controller
 
         //DBにはURLを保存
 
+        try{
 
+        DB::beginTransaction();
         // TrainingResult::create([
             //createだと自動採番してしまうので、uuidを設定する場合はinsertで行う。
             TrainingResult::insert([
@@ -184,6 +187,16 @@ class TrainingResultController extends Controller
         // dd($steps);
         
         TrainingEvent::insert($steps);
+
+        DB::commit();
+    }catch(\Throwable $th){
+        DB::rollBack();
+        \Log::debug(print_r($th->getMessage(), true));
+        throw $th;
+    }
+
+    return redirect()->route('training_result.show', ['id' => $uuid]);
+
 
     }
 
