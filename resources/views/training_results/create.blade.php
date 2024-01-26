@@ -8,8 +8,8 @@
       {{ Breadcrumbs::render('create') }}
       <div class="grid grid-cols-2 rounded border border-gray-500 mt-4">
         <div class="col-span-1">
-          <img class="object-cover w-full aspect-video" src="/images/recipe-dummy.png" alt="recipe-image">
-          <input type="file" name="image" class="border border-gray-300 p-2 mb-4 w-full rounded">
+          <img id="preview" class="object-cover w-full aspect-video" src="/images/recipe-dummy.png" alt="recipe-image">
+          <input type="file" id="image" name="image" class="border border-gray-300 p-2 mb-4 w-full rounded">
         </div>
         <div class="col-span-1 p-4">
           <input type="text" name="title" placeholder="トレーニング名" class="border border-gray-300 p-2 mb-4 w-full rounded">
