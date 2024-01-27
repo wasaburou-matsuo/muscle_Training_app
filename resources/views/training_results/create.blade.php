@@ -6,7 +6,7 @@
   <form action="{{route('training_result.store')}}" method="POST" class="w-10/12 p-4 mx-auto bg-white rounded" enctype="multipart/form-data">
     @csrf
       {{ Breadcrumbs::render('create') }}
-      <div class="grid grid-cols-2 rounded border border-gray-500 my-3">
+      <div class="grid grid-cols-2 rounded border border-gray-500 my-4 ">
         <div class="col-span-1">
           <img id="preview" class="object-cover w-full aspect-video" src="/images/recipe-dummy.png" alt="recipe-image">
           <input type="file" id="image" name="image" class="border border-gray-300 p-2 mb-4 w-full rounded">

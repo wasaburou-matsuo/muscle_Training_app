@@ -22,7 +22,17 @@ class TrainingResultCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            //formのname属性で指定。
+            'title' => 'required|string|max:50',
+            'description' => 'required|string|max:500',
+        ];
+    }
+
+    public function attributes(){
+
+        return [
+            'title' => 'トレーニング名',
+            'description' => 'トレーニングの説明',
         ];
     }
 }

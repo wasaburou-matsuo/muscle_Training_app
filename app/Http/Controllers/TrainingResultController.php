@@ -128,7 +128,7 @@ class TrainingResultController extends Controller
      */ 
     
     //TrainingResultCreateRequestは通常のRequestファザードを継承しているため、
-    // RequestをTrainingResultCreateRequestに変更しても、問題ない。
+    // RequestをTrainingResultCreateRequestに変更しても、all関数が使えるので問題ない。
     // public function store(Request $request)
     public function store(TrainingResultCreateRequest $request)
     {
