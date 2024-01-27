@@ -31,6 +31,7 @@
             {{-- @include('layouts.navigation') --}}
             @include('layouts.announce-header')
             @include('layouts.global-header')
+            @include('flash::message')
 
             <!-- Page Heading -->
             @if (isset($header))
