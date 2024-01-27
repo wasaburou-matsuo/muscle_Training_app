@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\TrainingResultsController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\TrainingResultCreateRequest;
 
 class TrainingResultController extends Controller
 {
@@ -124,8 +125,12 @@ class TrainingResultController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+     */ 
+    
+    //TrainingResultCreateRequestは通常のRequestファザードを継承しているため、
+    // RequestをTrainingResultCreateRequestに変更しても、all関数が使えるので問題ない。
+    // public function store(Request $request)
+    public function store(TrainingResultCreateRequest $request)
     {
         //
         $post = $request->all();
@@ -195,6 +200,7 @@ class TrainingResultController extends Controller
         throw $th;
     }
 
+    flash()->success('トレーニングを投稿しました!');
     return redirect()->route('training_result.show', ['id' => $uuid]);
 
 
