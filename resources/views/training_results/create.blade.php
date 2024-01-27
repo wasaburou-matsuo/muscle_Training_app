@@ -12,12 +12,12 @@
           <input type="file" id="image" name="image" class="border border-gray-300 p-2 mb-4 w-full rounded">
         </div>
         <div class="col-span-1 p-4">
-          <input type="text" name="title" placeholder="トレーニング名" class="border border-gray-300 p-2 mb-4 w-full rounded">
-          <textarea name="description" placeholder="トレーニングの説明" class="border border-gray-300 p-2 mb-4 w-full roundedl"></textarea>
+          <input type="text" name="title" value="{{ old('title') }}" placeholder="トレーニング名" class="border border-gray-300 p-2 mb-4 w-full rounded">
+          <textarea name="description" placeholder="トレーニングの説明" class="border border-gray-300 p-2 mb-4 w-full roundedl">{{ old('title') }}</textarea>
           <select name="category" class="border border-gray-300 p-2 mb-4 w-full rounded">
             <option value="">トレーニング部位</option>
           @foreach ($areas as $a)
-            <option value="{{ $a['id']}}">{{ $a['name']}}</option>
+            <option value="{{ $a['id']}}" {{ (old('category') ?? null) == $a['id'] ? 'selected' : '' }}>{{ $a['name']}} </option>
           @endforeach
             </select>
 

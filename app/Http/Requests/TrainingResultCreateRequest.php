@@ -25,7 +25,11 @@ class TrainingResultCreateRequest extends FormRequest
             //formのname属性で指定。
             'title' => 'required|string|max:50',
             'description' => 'required|string|max:500',
-        ];
+            'category' => 'required',
+            'image' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+            'equipments.*.name' => 'required|string|max:50',
+            'equipments.*.weight' => 'required|string|max:50',
+            'steps.*' => 'required|string|max:50'        ];
     }
 
     public function attributes(){
@@ -33,6 +37,12 @@ class TrainingResultCreateRequest extends FormRequest
         return [
             'title' => 'トレーニング名',
             'description' => 'トレーニングの説明',
+            'category' => 'カテゴリ',
+            'image' => 'レシピの画像',
+            'equipments.*.name' => '材料名',
+            'equipments.*.weight' => '分量',
+            'steps.*' => '手順'
+            
         ];
     }
 }
