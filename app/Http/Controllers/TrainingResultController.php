@@ -273,6 +273,13 @@ class TrainingResultController extends Controller
         // ->toArray();   
         $areas = TrainingArea::all();
 
+
+        // ログインしていないまたはログインユーザーidと投稿データのidが一致していない場合
+        if(!Auth::check() || (Auth::id() !== $training_results['user_id'])){
+            abort(403);
+        }   
+        
+
         return view('training_results.edit',compact('training_results','areas'));
     }
 
