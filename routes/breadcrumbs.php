@@ -31,3 +31,9 @@ Breadcrumbs::for('create', function (BreadcrumbTrail $trail) {
     $trail->push('トレーニング投稿', route('training_result.create'));
 });
 
+// トレーニング一覧 > レシピ編集
+Breadcrumbs::for('edit', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('トレーニング編集');
+});
+

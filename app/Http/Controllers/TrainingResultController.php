@@ -242,13 +242,20 @@ class TrainingResultController extends Controller
         // $training_results_recode = TrainingResult::find($id);
         // $training_results_recode->increment('views');
 
+        //トレーニング投稿者とログインユーザーが同じかどうか
+        $is_my_training = false;
+        // ログインしているかつログインユーザーidと投稿データのidが一致していたら
+        if(Auth::check() && (Auth::id() === $training_results['user_id'])){
+            $is_my_training = true;
+        }
+
         //リレーションで器具と説明を取得予定
-
-
         // dd($training_results);
 
         //トレーニング用の閲覧ページを作成。
-        return view('training_results.show',compact('training_results'));
+        // return view('training_results.show',compact('training_results'));
+        // is_my_training変数をビューに渡し、trueでの場合は、編集ボタンを表示させる。
+        return view('training_results.show',compact('training_results','is_my_training'));
         
         
     }
@@ -259,6 +266,13 @@ class TrainingResultController extends Controller
     public function edit(string $id)
     {
         //
+        $training_results = TrainingResult::with(['equipments','events','reviews.user','user'])
+        ->where('training_results.id',$id)
+        ->first()->toArray();    
+        // ->toArray();   
+        $areas = TrainingArea::all();
+
+        return view('training_results.edit',compact('training_results','areas'));
     }
 
     /**
@@ -267,6 +281,70 @@ class TrainingResultController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $post = $request->all();
+        // dd($post);
+        // 画像の更新
+        //画像更新用の配列
+        $update_array = [
+        'title' => $post['title'],
+        'description' => $post['description'],
+        'training_areas_id' => $post['category_id']
+        ];
+
+        // 画像が更新されていれば、S3のデータを書き換え、URLを取得する。
+        if( $request->hasFile('image') ) {
+            $image = $request->file('image');
+            // s3に画像をアップロード
+            $path = Storage::disk('s3')->putFile('training-result', $image, 'public');
+            // s3のURLを取得
+            $url = Storage::disk('s3')->url($path);
+            // DBにはURLを保存
+            $update_array['image'] = $url;
+        }
+
+    try{
+        //クエリビルダ
+        TrainingResult::where('id', $id)->update($update_array);
+
+        // dd($post);
+            //一度古いデータを削除してInsertしなおす
+            TrainingEquipment::where('training_results_id', $id)->delete();
+            TrainingEvent::where('training_results_id', $id)->delete();
+
+            $equipments = [];
+            foreach($post['equipments'] as $key => $equipment){
+            $equipments[$key] = [
+                'training_results_id' => $id,
+                'name' => $equipment['name'],
+                'weight' => $equipment['weight']
+            ];
+            }
+    
+            // dd($equipments);
+            
+            TrainingEquipment::insert($equipments);
+    
+            $steps = [];
+            foreach($post['steps'] as $key => $step){
+            $steps[$key] = [
+                'training_results_id' => $id,
+                'step_number' => $key + 1,
+                'description' => $step
+            ];
+            }
+
+            TrainingEvent::insert($steps);
+            DB::commit();
+
+        }catch(\Throwable $th){
+            DB::rollBack();
+            \Log::debug(print_r($th->getMessage(), true));
+            throw $th;
+        }
+        flash()->success('トレーニングを更新しました!');
+        return redirect()->route('training_result.show', ['id' => $id]);
+
+        
     }
 
     /**

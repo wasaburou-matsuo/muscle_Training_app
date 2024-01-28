@@ -37,6 +37,9 @@
         </div>
       </div>
     </div>
+    @if($is_my_training)
+    <a href="{{ route('training_result.edit', ['id' => $training_results['id']]) }}" class="block w-2/12 p-4 my-4 mx-auto bg-white rounded text-center text-green-500 border border-green-500 hover:bg-green-500 hover:text-white">編集する</a>
+    @endif
     <!-- reviews -->
     {{-- {{dd($training_results['reviews'])}} --}}
     <div class="w-10/12 p-4 mx-auto bg-white rounded">
