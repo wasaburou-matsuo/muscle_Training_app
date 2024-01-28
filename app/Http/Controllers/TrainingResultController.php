@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\TrainingResultCreateRequest;
+use App\Http\Requests\TrainingUpdateRequest;
 
 class TrainingResultController extends Controller
 {
@@ -278,7 +279,7 @@ class TrainingResultController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TrainingUpdateRequest $request, string $id)
     {
         //
         $post = $request->all();
