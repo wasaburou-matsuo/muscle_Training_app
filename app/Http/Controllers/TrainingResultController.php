@@ -361,5 +361,11 @@ class TrainingResultController extends Controller
     public function destroy(string $id)
     {
         //
+        TrainingResult::where('id',$id)->delete();
+        // 論理削除の為、上記の削除処理は以下と同じ
+        // TrainingResult::where('id',$id)->update('deleted_at' => now());
+
+        flash()->warning('トレーニングを削除しました!');
+        return redirect()->route('home');
     }
 }

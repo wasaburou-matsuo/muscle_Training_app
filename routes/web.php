@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/trainig_result', [TrainingResultController::class,'store'])->name('training_result.store');
     Route::get('/training_result/edit/{id}', [TrainingResultController::class,'edit'])->name('training_result.edit');
     Route::patch('/training_result/update/{id}', [TrainingResultController::class,'update'])->name('training_result.update');
+    Route::delete('/training_result/{id}', [TrainingResultController::class,'destroy'])->name('training_result.destroy');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
